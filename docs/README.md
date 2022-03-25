@@ -1,7 +1,7 @@
 # Headline
 
 // docsify serve docs
-https://giantaxewhy.github.io/docs/
+https://giantaxewhy.github.io/docForDX/
 
 <!--
 https://github.com/GiantAxeWhy/MVVM-why.git
