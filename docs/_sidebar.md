@@ -27,6 +27,7 @@
 
 - 技术调研
 
+  - [探寻小程序高性能之路](highSpeed.md)
   - [web 实时通信技术](communication.md)
   - [express](express.md)
   - [大屏数据可视化](bigScreen.md)
@@ -34,9 +35,11 @@
   - [threeJS](webGL.md)
   - [3d 技术调研](why3d.md)
   - [跨端集成前端技术调研](flutter.md)
-  - [探寻小程序高性能之路](highSpeed.md)
+
       <!-- - [TCP 相关](TCP.md) -->
     <!-- - [webpack 汇总](webpack.md)
+
+
   - [网络相关汇总](http.md)
   - [工具类汇总](tool.md)
   - [手写简易 webpack](webpack-mini.md) -->
