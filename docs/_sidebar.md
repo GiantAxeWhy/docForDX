@@ -34,6 +34,8 @@
   - [threeJS](webGL.md)
   - [3d 技术调研](why3d.md)
   - [跨端集成前端技术调研](flutter.md)
+
+  - [探寻小程序高性能之路](highSpeed.md)
       <!-- - [TCP 相关](TCP.md) -->
     <!-- - [webpack 汇总](webpack.md)
   - [网络相关汇总](http.md)
