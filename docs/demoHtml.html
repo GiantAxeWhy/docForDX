@@ -1,0 +1,44 @@
+<canvas id="paper" width="0" height="0"></canvas>
+<script>
+  function loadImage(src) {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    return new Promise((resolve) => {
+      img.onload = () => {
+        resolve(img);
+      };
+      img.src = src;
+    });
+  }
+
+  const canvas = document.getElementById("paper");
+  const context = canvas.getContext("2d");
+
+  (async function () {
+    // 异步加载图片
+    const img = await loadImage(
+      "https://p2.ssl.qhimg.com/d/inn/4b7e384c55dc/girl1.jpg"
+    );
+
+    const { width, height } = img;
+    // 将图片绘制到 canvas
+    canvas.width = width;
+    canvas.height = height;
+    context.drawImage(img, 0, 0);
+
+    const imgData = context.getImageData(0, 0, width, height);
+    const data = imgData.data;
+    for (let i = 0; i < width * height * 4; i += 4) {
+      const r = data[i];
+      g = data[i + 1];
+      b = data[i + 2];
+      a = data[i + 3];
+      const v = 0.212 * r + 0.174 * g + 0.074 * b;
+      data[i] = v;
+      data[i + 1] = v;
+      data[i + 2] = v;
+      data[i + 3] = a;
+    }
+    context.putImageData(imgData, 0, 0);
+  })();
+</script>
