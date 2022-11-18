@@ -361,3 +361,112 @@ console.log(2);
 ```
 
 async 函数在 await 之前的代码都是同步执行的，可以理解为 await 之前的代码属于 new Promise 时传入的代码，await 之后的所有代码都是在 Promise.then 中的回调
+
+第一版
+
+```cpp
+
+void MainThread(){
+     int num1 = 1+2; //任务1
+     int num2 = 20/5; //任务2
+     int num3 = 7*8; //任务3
+     print("最终计算的值为:%d,%d,%d",num1,num2,num3)； //任务4
+  }
+```
+
+第二版
+
+```cpp
+
+//GetInput
+//等待用户从键盘输入一个数字，并返回该输入的数字
+int GetInput(){
+    int input_number = 0;
+    cout<<"请输入一个数:";
+    cin>>input_number;
+    return input_number;
+}
+
+//主线程(Main Thread)
+void MainThread(){
+     for(;;){
+          int first_num = GetInput()；
+          int second_num = GetInput()；
+          result_num = first_num + second_num;
+          print("最终计算的值为:%d",result_num)；
+      }
+}
+```
+
+第三版
+
+```cpp
+
+class TaskQueue{
+  public:
+  Task takeTask(); //取出队列头部的一个任务
+  void pushTask(Task task); //添加一个任务到队列尾部
+};
+
+
+TaskQueue task_queue；
+void ProcessTask();
+void MainThread(){
+  for(;;){
+    Task task = task_queue.takeTask();
+    ProcessTask(task);
+  }
+}
+```
+
+https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/platform/task_type.h
+
+https://source.chromium.org/chromium/chromium/src/+/main:base/task/sequence_manager/task_queue_impl.h
+
+```cpp
+
+struct DelayTask{
+  int64 id；
+  CallBackFunction cbf;
+  int start_time;
+  int delay_time;
+};
+DelayTask timerTask;
+timerTask.cbf = showName;
+timerTask.start_time = getCurrentTime(); //获取当前时间
+timerTask.delay_time = 200;//设置延迟执行时间
+
+
+void ProcessTimerTask(){
+  //从delayed_incoming_queue中取出已经到期的定时器任务
+  //依次执行这些任务
+}
+
+TaskQueue task_queue；
+void ProcessTask();
+bool keep_running = true;
+void MainTherad(){
+  for(;;){
+    //执行消息队列中的任务
+    Task task = task_queue.takeTask();
+    ProcessTask(task);
+
+    //执行延迟队列中的任务
+    ProcessDelayTask()
+
+    if(!keep_running) //如果设置了退出标志，那么直接退出线程循环
+        break;
+  }
+}
+```
+
+https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/dom_timer.cc
+
+宏任务、微任务
+
+https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model
+WHATWG 规范定义的大致流程：
+先从多个消息队列中选出一个最老的任务，这个任务称为 oldestTask；
+然后循环系统记录任务开始执行的时间，并把这个 oldestTask 设置为当前正在执行的任务；
+当任务执行完成之后，删除当前正在执行的任务，并从对应的消息队列中删除掉这个 oldestTask；
+最后统计执行完成的时长等信息。

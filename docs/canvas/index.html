@@ -8,14 +8,23 @@
   </head>
   <body>
     <canvas id="paper" width="0" height="0"></canvas>
+    <image
+      src="./assets/girl1.jpeg"
+      style="width: 100px; height: 100px; filter: blur(15px)"
+    ></image>
     <script type="module">
       import {
         loadImage,
         getImageData,
         traverse,
         gaussianBlur,
+        getPixel,
       } from "./lib/utils.js";
-      import { transformColor } from "./lib/color-matrix.js";
+      import {
+        transformColor,
+        // brightness,
+        // saturate,
+      } from "./lib/color-matrix.js";
 
       function brightness(p) {
         return [p, 0, 0, 0, 0, 0, p, 0, 0, 0, 0, 0, p, 0, 0, 0, 0, 0, 1, 0];
@@ -92,7 +101,7 @@
         // traverse(imageData, ({ r, g, b, a }) => {
         //   return transformColor(
         //     [r, g, b, a],
-        //     channel({ r: 1.2 }),
+        //     channel({ r: 1.2, g: 0.75 }),
         //     brightness(1.2),
         //     saturate(1.2)
         //   );
@@ -123,6 +132,23 @@
         // }
         // update();
       })();
+      // (async function () {
+      //   const img = await loadImage("./assets/girl1.jpeg");
+      //   const sunlight = await loadImage("./assets/sunlight.jpg");
+      //   const imageData = getImageData(img);
+      //   const texture = getImageData(sunlight);
+      //   traverse(imageData, ({ r, g, b, a, index }) => {
+      //     const texColor = getPixel(texture, index);
+      //     return transformColor(
+      //       [r, g, b, a],
+      //       brightness(1 + 0.7 * texColor[3]),
+      //       saturate(2 - texColor[3])
+      //     );
+      //   });
+      //   canvas.width = imageData.width;
+      //   canvas.height = imageData.height;
+      //   context.putImageData(imageData, 0, 0);
+      // })();
     </script>
   </body>
 </html>

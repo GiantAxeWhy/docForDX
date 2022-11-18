@@ -1,4 +1,4 @@
-# 双向数据绑定
+# 1、双向数据绑定
 
 ```js
 let a = document.createElement("div");
@@ -98,7 +98,7 @@ flag1 & patch.CLASS 0
 
 ```
 
-# 最长递增子序列
+# 2、最长递增子序列
 
 ```js
 var lengthOfLIS = function (nums) {
@@ -119,6 +119,108 @@ var lengthOfLIS = function (nums) {
   }
   return max;
 };
+```
+
+## 简单 diff
+
+```js
+let utils = {
+  /**
+   * 比较两个json（新json与老json）的不同,并返回 不同时的旧值(old_val)和新值(new_val)
+   * @param {*} json1 老json
+   * @param {*} json2 新json
+   */
+  diff(json1, json2) {
+    if (
+      !json1 ||
+      this.isEmptyObject(json1) ||
+      !json2 ||
+      this.isEmptyObject(json2)
+    ) {
+      return null;
+    }
+    let diffRes = {
+      old_val: {},
+      new_val: {},
+    };
+    for (let k in json2) {
+      // 判断数据类型是否一致
+      if (this.getTypeByObj(json2[k]) === this.getTypeByObj(json1[k])) {
+        // 比较 “Array”和“Object”类型
+        if (
+          this.getTypeByObj(json2[k]) === "Array" ||
+          this.getTypeByObj(json2[k]) === "Object"
+        ) {
+          const diffData = this.diff(json1[k], json2[k]);
+          if (!this.isEmptyObject(diffData)) {
+            diffRes.old_val[k] = diffData.old_val;
+            diffRes.new_val[k] = diffData.new_val;
+          }
+        } else if (json1[k] !== json2[k]) {
+          // 比较其他类型数据
+          diffRes.old_val[k] = json1[k];
+          diffRes.new_val[k] = json2[k];
+        }
+      } else {
+        diffRes.old_val[k] = json1[k];
+        diffRes.new_val[k] = json2[k];
+      }
+    }
+    // 若没有变化，返回null
+    if (
+      this.isEmptyObject(diffRes.old_val) ||
+      this.isEmptyObject(diffRes.new_val)
+    ) {
+      return null;
+    }
+    return diffRes;
+  },
+  /**
+   * 获取数据类型
+   * @param {*} obj
+   */
+  getTypeByObj(obj) {
+    return Object.prototype.toString
+      .call(obj)
+      .match(/^\[object ([a-zA-Z]*)\]$/)[1];
+  },
+  /**
+   * 判断是否是空对象
+   * @param {*} obj
+   */
+  isEmptyObject(obj) {
+    for (var key in obj) {
+      return false;
+    }
+    return true;
+  },
+};
+let obj1 = {
+  name: "jack",
+  age: 18,
+  title: "这是标题",
+  lv2: {
+    tip: "这是二层提示",
+    lv3: {
+      noC: "noC",
+      msg: "这是三层msg",
+    },
+  },
+};
+let obj2 = {
+  name: "jack",
+  age: 188,
+  title: "这是标题1",
+  lv2: {
+    tip: "这是二层提示",
+    lv3: {
+      noC: "noC",
+      msg: "这是三层msg1",
+    },
+  },
+  no: "这是obj1没有的",
+};
+console.log(utils.diff(obj1, obj2));
 ```
 
 ```shell
@@ -143,7 +245,7 @@ LCP\ 最大内容绘制
 CLS\ 累计位移偏移
 ```
 
-# compiler
+# 3、compiler
 
 虚拟 dom 从哪来
 词法分析-》语义分析-》AST->transform->generate
@@ -271,7 +373,7 @@ function parse(template) {
 }
 ```
 
-# eventloop
+# 4、eventloop
 
 ```js
 function foo() {
@@ -282,7 +384,7 @@ function foo() {
 foo();
 ```
 
-# 前端可视化
+# 5、前端可视化
 
 ## 图形基础
 
@@ -404,7 +506,7 @@ gl.enabledVertexAttribArray(vPosition);
 
 ## 视觉呈现
 
-# 灰度滤镜与高斯模糊
+# 6、灰度滤镜与高斯模糊
 
 0.2126、0.7152 0.0722
 ![](_media/8325c3e173c27652172feed71991dfeb.webp)
@@ -416,3 +518,76 @@ gl.enabledVertexAttribArray(vPosition);
 ![](_media/54849d44dc3036e8fa7d7b92b8c0885f.webp)
 高斯计算公式
 ![](_media/4134360e2c0105594491b9702eb036f5.webp)
+
+# 7、《HTTP 演变（主要针对队头阻塞讨论）》
+
+# 8、VUE VS REACT
+
+## 数据驱动页面的不同方式
+
+- Angular 1：脏检查
+- React:虚拟 dom
+  fiber->链表
+
+```js
+<div id="app">
+  <p class="item">Item1</p>
+  <div class="item">Item2</div>
+</div>
+```
+
+```json
+{
+  "tag": "div",
+  "attrs": {
+    "id": "app"
+  },
+  "children": [
+    {
+      "tag": "p",
+      "attrs": { "className": "item" },
+      "children": ["Item1"]
+    },
+    {
+      "tag": "div",
+      "attrs": { "className": "item" },
+      "children": ["Item2"]
+    }
+  ]
+}
+```
+
+### vue 数据驱动进化史
+
+#### 一些新的特性
+
+- RFC 机制 https://github.com/vuejs/rfcs
+- 响应式系统
+- 自定义渲染器
+- TS
+- Composition API 组合语法
+- 新的组件
+- vite
+
+## JSX VS TEMPLATE
+
+https://vue-next-template-explorer.netlify.app/#eyJzcmMiOiI8ZGl2IGlkPVwiYXBwXCI+XG4gICAgPGRpdiBAY2xpY2s9XCIoKT0+Y29uc29sZS5sb2coeHgpXCIgIG5hbWU9XCJoZWxsb1wiPnt7bmFtZX19PC9kaXY+XG4gICAgPGgxID7mioDmnK/mkbjpsbw8L2gxPlxuICAgIDxwIDppZD1cIm5hbWVcIiBjbGFzcz1cImFwcFwiPuaRuOmxvOaXtumXtDwvcD5cbjwvZGl2PlxuIiwic3NyIjpmYWxzZSwib3B0aW9ucyI6eyJob2lzdFN0YXRpYyI6dHJ1ZSwiY2FjaGVIYW5kbGVycyI6dHJ1ZSwib3B0aW1pemVCaW5kaW5ncyI6ZmFsc2V9fQ==
+
+```js
+// patchFlags 字段类型列举
+export const enum PatchFlags {
+  TEXT = 1,   // 动态文本内容
+  CLASS = 1 << 1,   // 动态类名
+  STYLE = 1 << 2,   // 动态样式
+  PROPS = 1 << 3,   // 动态属性，不包含类名和样式
+  FULL_PROPS = 1 << 4,   // 具有动态 key 属性，当 key 改变，需要进行完整的 diff 比较
+  HYDRATE_EVENTS = 1 << 5,   // 带有监听事件的节点
+  STABLE_FRAGMENT = 1 << 6,   // 不会改变子节点顺序的 fragment
+  KEYED_FRAGMENT = 1 << 7,   // 带有 key 属性的 fragment 或部分子节点
+  UNKEYED_FRAGMENT = 1 << 8,   // 子节点没有 key 的fragment
+  NEED_PATCH = 1 << 9,   // 只会进行非 props 的比较
+  DYNAMIC_SLOTS = 1 << 10,   // 动态的插槽
+  HOISTED = -1,   // 静态节点，diff阶段忽略其子节点
+  BAIL = -2   // 代表 diff 应该结束
+}
+```

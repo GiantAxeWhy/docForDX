@@ -28,17 +28,17 @@
 
     const imgData = context.getImageData(0, 0, width, height);
     const data = imgData.data;
-    for (let i = 0; i < width * height * 4; i += 4) {
-      const r = data[i];
-      g = data[i + 1];
-      b = data[i + 2];
-      a = data[i + 3];
-      const v = 0.212 * r + 0.174 * g + 0.074 * b;
-      data[i] = v;
-      data[i + 1] = v;
-      data[i + 2] = v;
-      data[i + 3] = a;
-    }
+    // for (let i = 0; i < width * height * 4; i += 4) {
+    //   const r = data[i];
+    //   g = data[i + 1];
+    //   b = data[i + 2];
+    //   a = data[i + 3];
+    //   const v = 0.212 * r + 0.174 * g + 0.074 * b;
+    //   data[i] = v;
+    //   data[i + 1] = v;
+    //   data[i + 2] = v;
+    //   data[i + 3] = a;
+    // }
     context.putImageData(imgData, 0, 0);
   })();
 </script>
