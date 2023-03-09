@@ -816,8 +816,7 @@ b.html 为中间代理页，与 a.html 同域，内容为空。
 
 ## 8.location.hash + iframe
 
-实现原理： a.html 欲与 c.html 跨域相互通信，通过中间页 b.html 来实现。 三个页面，不同域之间利用 iframe 的 location.hash 传值，相同域之间直接 js 访问来通信。
-具体实现步骤：一开始 a.html 给 c.html 传一个 hash 值，然后 c.html 收到 hash 值后，再把 hash 值传递给 b.html，最后 b.html 将结果放到 a.html 的 hash 值中。
+ 具体实现步骤：一开始 a.html 给 c.html 传一个 hash 值，然后 c.html 收到 hash 值后，再把 hash 值传递给 b.html，最后 b.html 将结果放到 a.html 的 hash 值中。
 同样的，a.html 和 b.html 是同域的，都是 http://localhost:3000;而 c.html 是 http://localhost:4000
 
 ```js

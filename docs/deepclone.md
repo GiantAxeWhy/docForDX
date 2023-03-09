@@ -188,7 +188,7 @@ function produce(baseState, fn) {
 
 const state = {
   info: {
-    name: "yck",
+    name: "zqy",
     career: {
       first: {
         name: "111",

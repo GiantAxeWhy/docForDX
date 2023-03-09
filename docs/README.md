@@ -1,6 +1,6 @@
 # Headline
 
-// docsify serve docs
+// serve docs
 https://giantaxewhy.github.io/docForDX/
 
 <!--

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>行政区域工具</title>
+    <script
+      type="text/javascript"
+      src="https://api.map.baidu.com/api?v=3.0&ak=cLcGoUIH6iQVLKPhcmgl7YNuSXNLF1Ta"
+    ></script>
+  </head>
+  <body>
+    <div
+      style="width: 1020px; height: 940px; border: 1px solid gray"
+      id="container"
+    ></div>
+    <p>
+      <input
+        id="startBtn"
+        type="button"
+        onclick="startTool();"
+        value="开启取点工具"
+      /><input
+        type="button"
+        onclick="map.clearOverlays();document.getElementById('info').innerHTML = '';points=[];"
+        value="清除"
+      />
+    </p>
+    <div id="info"></div>
+  </body>
+</html>
+<script type="text/javascript">
+                          if (window.__POWERED_BY_QIANKUN__) {
+                            __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
+                          }
+                          <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react' : '/'}>
+
+                            import './public-path';
+                        import React from 'react';
+                        import ReactDOM from 'react-dom';
+                        import App from './App';
+
+                        function render(props) {
+                          const { container } = props;
+                          ReactDOM.render(<App />, container ? container.querySelector('#root') : document.querySelector('#root'));
+                        }
+
+                        if (!window.__POWERED_BY_QIANKUN__) {
+                          render({});
+                        }
+
+                        export async function bootstrap() {
+                          console.log('[react16] react app bootstraped');
+                        }
+
+                        export async function mount(props) {
+                          console.log('[react16] props from main framework', props);
+                          render(props);
+                        }
+
+                        export async function unmount(props) {
+                          const { container } = props;
+                          ReactDOM.unmountComponentAtNode(container ? container.querySelector('#root') : document.querySelector('#root'));
+                        }
+
+                        npm i -D @rescripts/cli
+
+                        const { name } = require('./package');
+
+                      module.exports = {
+                        webpack: (config) => {
+                          config.output.library = `${name}-[name]`;
+                          config.output.libraryTarget = 'umd';
+                          config.output.jsonpFunction = `webpackJsonp_${name}`;
+                          config.output.globalObject = 'window';
+
+                          return config;
+                        },
+
+                        devServer: (_) => {
+                          const config = _;
+
+                          config.headers = {
+                            'Access-Control-Allow-Origin': '*',
+                          };
+                          config.historyApiFallback = true;
+                          config.hot = false;
+                          config.watchContentBase = false;
+                          config.liveReload = false;
+
+                          return config;
+                        },
+                      };
+
+                      -   "start": "react-scripts start",
+                    +   "start": "rescripts start",
+                    -   "build": "react-scripts build",
+                    +   "build": "rescripts build",
+                    -   "test": "react-scripts test",
+                    +   "test": "rescripts test",
+                    -   "eject": "react-scripts eject"
+
+
+
+                    if (window.__POWERED_BY_QIANKUN__) {
+                    __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
+                  }
+
+
+                  import './public-path';
+                import Vue from 'vue';
+                import VueRouter from 'vue-router';
+                import App from './App.vue';
+                import routes from './router';
+                import store from './store';
+
+                Vue.config.productionTip = false;
+
+                let router = null;
+                let instance = null;
+                function render(props = {}) {
+                  const { container } = props;
+                  router = new VueRouter({
+                    base: window.__POWERED_BY_QIANKUN__ ? '/app-vue/' : '/',
+                    mode: 'history',
+                    routes,
+                  });
+
+                  instance = new Vue({
+                    router,
+                    store,
+                    render: (h) => h(App),
+                  }).$mount(container ? container.querySelector('#app') : '#app');
+                }
+
+                // 独立运行时
+                if (!window.__POWERED_BY_QIANKUN__) {
+                  render();
+                }
+
+                export async function bootstrap() {
+                  console.log('[vue] vue app bootstraped');
+                }
+                export async function mount(props) {
+                  console.log('[vue] props from main framework', props);
+                  render(props);
+                }
+                export async function unmount() {
+                  instance.$destroy();
+                  instance.$el.innerHTML = '';
+                  instance = null;
+                  router = null;
+                }
+
+                const { name } = require('./package');
+              module.exports = {
+                devServer: {
+                  headers: {
+                    'Access-Control-Allow-Origin': '*',
+                  },
+                },
+                configureWebpack: {
+                  output: {
+                    library: `${name}-[name]`,
+                    libraryTarget: 'umd', // 把微应用打包成 umd 库格式
+                    jsonpFunction: `webpackJsonp_${name}`,
+                  },
+                },
+              };
+
+              if (window.__POWERED_BY_QIANKUN__) {
+              // eslint-disable-next-line no-undef
+              __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
+            }
+
+            + import { APP_BASE_HREF } from '@angular/common';
+
+          @NgModule({
+            imports: [RouterModule.forRoot(routes)],
+            exports: [RouterModule],
+            // @ts-ignore
+          +  providers: [{ provide: APP_BASE_HREF, useValue: window.__POWERED_BY_QIANKUN__ ? '/app-angular' : '/' }]
+          })
+
+          import './public-path';
+        import { enableProdMode, NgModuleRef } from '@angular/core';
+        import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+        import { AppModule } from './app/app.module';
+        import { environment } from './environments/environment';
+
+        if (environment.production) {
+          enableProdMode();
+        }
+
+        let app: void | NgModuleRef<AppModule>;
+        async function render() {
+          app = await platformBrowserDynamic()
+            .bootstrapModule(AppModule)
+            .catch((err) => console.error(err));
+        }
+        if (!(window as any).__POWERED_BY_QIANKUN__) {
+          render();
+        }
+
+        export async function bootstrap(props: Object) {
+          console.log(props);
+        }
+
+        export async function mount(props: Object) {
+          render();
+        }
+
+        export async function unmount(props: Object) {
+          console.log(props);
+          // @ts-ignore
+          app.destroy();
+        }
+
+        npm i @angular-builders/custom-webpack@9.2.0 -D
+
+
+        const appName = require('./package.json').name;
+      module.exports = {
+        devServer: {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+        },
+        output: {
+          library: `${appName}-[name]`,
+          libraryTarget: 'umd',
+          jsonpFunction: `webpackJsonp_${appName}`,
+        },
+      };
+
+
+
+      - "builder": "@angular-devkit/build-angular:browser",
+    + "builder": "@angular-builders/custom-webpack:browser",
+      "options": {
+    +    "customWebpackConfig": {
+    +      "path": "./custom-webpack.config.js"
+    +    }
+      }
+
+
+      - "builder": "@angular-devkit/build-angular:dev-server",
+  + "builder": "@angular-builders/custom-webpack:dev-server",
+
+
+
+  - import 'zone.js/dist/zone';
+
+
+
+  <!-- 也可以使用其他的CDN/本地的包 -->
+<script src="https://unpkg.com/zone.js" ignore></script>
+
+
+- "target": "es2015",
++ "target": "es5",
++ "typeRoots": [
++   "node_modules/@types"
++ ],
+
+
+
+- <app-root></app-root>
++ <app-root id="angular9"></app-root>
+
+
+- selector: 'app-root',
++ selector: '#angular9 app-root',
+
+
+
+npm i @angular-builders/custom-webpack@7 -D
+npm i @angular-builders/dev-server -D
+
+
+
+- "builder": "@angular-devkit/build-angular:browser",
++ "builder": "@angular-builders/custom-webpack:browser",
+  "options": {
++    "customWebpackConfig": {
++      "path": "./custom-webpack.config.js"
++    }
+  }
+
+
+  - "builder": "@angular-devkit/build-angular:dev-server",
++ "builder": "@angular-builders/dev-server:generic",
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purehtml Example</title>
+</head>
+<body>
+  <div>
+    Purehtml Example
+  </div>
+</body>
+
++ <script src="//yourhost/entry.js" entry></script>
+</html>
+
+
+
+// 从生命周期 mount 中获取通信方法，使用方式和 master 一致
+export function mount(props) {
+  props.onGlobalStateChange((state, prev) => {
+    // state: 变更后的状态; prev 变更前的状态
+    console.log(state, prev);
+  });
+
+  props.setGlobalState(state);
+}
+
+
+
+
+const render = ($) => {
+  $('#purehtml-container').html('Hello, render with jQuery');
+  return Promise.resolve();
+};
+
+((global) => {
+  global['purehtml'] = {
+    bootstrap: () => {
+      console.log('purehtml bootstrap');
+      return Promise.resolve();
+    },
+    mount: () => {
+      console.log('purehtml mount');
+      return render($);
+    },
+    unmount: () => {
+      console.log('purehtml unmount');
+      return Promise.resolve();
+    },
+  };
+})(window);
+
+
+
+                          var map = new BMap.Map("container"); // 创建Map实例
+                          map.centerAndZoom("绍兴", 1); // 初始化地图,设置中心点坐标和地图级别
+
+                          var key = 1; //开关
+                          var newpoint; //一个经纬度
+                          var points = []; //数组，放经纬度信息
+                          var polyline = new BMap.Polyline(); //折线覆盖物
+
+                          function startTool() {
+                            //开关函数
+                            if (key == 1) {
+                              document.getElementById("startBtn").style.background = "green";
+                              document.getElementById("startBtn").style.color = "white";
+                              document.getElementById("startBtn").value = "开启状态";
+                              key = 0;
+                            } else {
+                              document.getElementById("startBtn").style.background = "red";
+                              document.getElementById("startBtn").value = "关闭状态";
+                              key = 1;
+                            }
+                          }
+                          map.addEventListener("click", function (e) {
+                            //单击地图，形成折线覆盖物
+                            newpoint = new BMap.Point(e.point.lng, e.point.lat);
+                            if (key == 0) {
+                              //    if(points[points.length].lng==points[points.length-1].lng){alert(111);}
+                              points.push(newpoint); //将新增的点放到数组中
+                              polyline.setPath(points); //设置折线的点数组
+                              map.addOverlay(polyline); //将折线添加到地图上
+                              document.getElementById("info").innerHTML +=
+                                "new BMap.Point(" + e.point.lng + "," + e.point.lat + "),</br>"; //输出数组里的经纬度
+                            }
+                          });
+                          map.addEventListener("dblclick", function (e) {
+                            //双击地图，形成多边形覆盖物
+                            if (key == 0) {
+                              map.disableDoubleClickZoom(); //关闭双击放大
+                              var polygon = new BMap.Polygon(points);
+                              map.addOverlay(polygon); //将折线添加到地图上
+                            }
+                          });
+</script>
